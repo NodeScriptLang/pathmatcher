@@ -60,7 +60,7 @@ export function matchTokens(
     }
     const paramNames = tokens.filter(_ => _.type === 'param').map(_ => _.value);
     for (const [i, name] of paramNames.entries()) {
-        params[name] = m[i + 1];
+        params[name] = decodeURIComponent(m[i + 1]);
     }
     return params;
 }
