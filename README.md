@@ -16,7 +16,7 @@ Path matching utils for pathname-based routing.
 ## Usage
 
 ```
-import { matchPath } from '@flexent/pathmatcher';
+import { matchPath } from '@nodescript/pathmatcher';
 
 matchPath('/users/{name}', '/users/joe');   // { name: 'joe' }
 matchPath('/users/{name}', '/users/', );    // null — no match
