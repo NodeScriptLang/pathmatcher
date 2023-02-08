@@ -13,7 +13,7 @@ export type PathParams = Record<string, string>;
 export function parsePath(path: string): PathToken[] {
     path = path.replace(/\/+$/, '');
     const tokens: PathToken[] = [];
-    const re = /\{(.*?)\}/ig;
+    const re = /\{(.*?)\}|\*/ig;
     let idx = 0;
     let m = re.exec(path);
     while (m != null) {
@@ -22,9 +22,17 @@ export function parsePath(path: string): PathToken[] {
             tokens.push({ type: 'string', value: prefix });
         }
         idx = m.index + m[0].length;
-        const [, asterisk, value] = /^(\*)?(.*)/.exec(m[1])!;
-        const wildcard = !!asterisk;
-        tokens.push({ type: 'param', value, wildcard });
+        if (m[0] === '*') {
+            tokens.push({ type: 'param', value: '*', wildcard: true });
+        } else {
+            let value = m[1];
+            let wildcard = false;
+            if (value.startsWith('*')) {
+                value = value.substring(1);
+                wildcard = true;
+            }
+            tokens.push({ type: 'param', value, wildcard });
+        }
         m = re.exec(path);
     }
     const suffix = path.substring(idx);
