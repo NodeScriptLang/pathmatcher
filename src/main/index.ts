@@ -77,7 +77,7 @@ function tokenToRegexp(token: PathToken) {
     if (token.type === 'string') {
         return escapeRegexp(token.value);
     }
-    return token.wildcard ? '(.+?)' : '([^/]+?)';
+    return token.wildcard ? '(.+)' : '([^/]+)';
 }
 
 function escapeRegexp(string: string) {

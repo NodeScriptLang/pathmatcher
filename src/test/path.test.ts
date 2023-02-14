@@ -165,6 +165,11 @@ describe('matchPath', () => {
             assert.deepStrictEqual(m, { filename: 'document', ext: 'pdf' });
         });
 
+        it('match eagerly', () => {
+            const m = matchPath('/{filename}.{ext}', '/document-v1.0.0.pdf');
+            assert.deepStrictEqual(m, { filename: 'document-v1.0.0', ext: 'pdf' });
+        });
+
         it('match start', () => {
             const m = matchPath('/{filename}.{ext}', '/document.pdf/123', true);
             assert.deepStrictEqual(m, { filename: 'document', ext: 'pdf' });
